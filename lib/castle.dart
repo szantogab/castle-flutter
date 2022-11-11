@@ -1,13 +1,21 @@
-
 import 'dart:async';
+import 'dart:js_util';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:castle_flutter/castle_web.dart' as web;
 
 class Castle {
-  static const MethodChannel _channel =
-      const MethodChannel('castle');
+  static late web.Castle castle;
+  
+  static const MethodChannel _channel = const MethodChannel('castle');
 
   static Future<void> configure({required publishableKey, debugLoggingEnabled, maxQueueLimit, flushLimit, useCloudflareApp, baseURLAllowList}) async {
+    if (kIsWeb) {
+      castle = web.castleJsConfigure(web.CastleConfigureOptions(pk: publishableKey));
+      return;
+    }
+    
     await _channel.invokeMethod('configure', <String, dynamic>{
       'publishableKey': publishableKey,
       'debugLoggingEnabled': debugLoggingEnabled,
@@ -52,6 +60,10 @@ class Castle {
   }
 
   static Future<String?> get createRequestToken async {
+    if (kIsWeb) {
+      return await promiseToFuture(castle.createRequestToken());
+    }
+    
     final String? token = await _channel.invokeMethod('createRequestToken');
     return token;
   }
