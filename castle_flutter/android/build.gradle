@@ -1,5 +1,3 @@
-package castle_flutter.android
-
 group 'io.castle.flutter.castle_flutter'
 version '1.0-SNAPSHOT'
 
