@@ -1,0 +1,35 @@
+description: Castle Flutter plugin.
+name: castle_flutter
+version: 2.1.0
+author: Castle Intelligence, Inc
+homepage: https://github.com/castle/castle-flutter
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+  flutter: ">=2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  castle_flutter_platform_interface:
+    path: ../castle_flutter_platform_interface/
+  castle_flutter_web:
+    path: ../castle_flutter_web/
+
+dev_dependencies:
+  coverage: "^1.0.1"
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: io.castle.flutter.castle_flutter
+        pluginClass: CastleFlutterPlugin
+      ios:
+        pluginClass: CastleFlutterPlugin
+      web:
+        default_package: castle_flutter_web
